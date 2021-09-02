@@ -1,18 +1,31 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View, FlatList } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import HeaderApp from './components/HeaderApp';
 import WeatherWidget from './components/WeatherWidget';
+import InputBar from './components/InputBar';
 
 export default function App() {
+  const [city, setCity] = useState('paris');
+  const submitHandler = (value) => {
+    setCity(value)
+  }
+
   return (
     <SafeAreaProvider>
       <View style={styles.container}>
-        <StatusBar style="auto" />
-        <HeaderApp />
-        <WeatherWidget city="Paris" zipcode={75000} />
+        <View>
+          <StatusBar style="auto" />
+        </View>
+        <View>
+          <HeaderApp />
+          <InputBar submitHandler={submitHandler} />
+        </View>
+        <View>
+          <WeatherWidget city={city} />
+        </View>
       </View>
     </SafeAreaProvider>
   );

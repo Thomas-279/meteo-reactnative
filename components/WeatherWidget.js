@@ -1,10 +1,10 @@
-import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Image } from 'react-native';
 
-export default function WeatherWidget({ city, zipcode }) {
+export default function WeatherWidget({ city }) {
     const [temperature, setTemperature] = useState();
     const [icon, setIcon] = useState();
+    const [picture, setPicture] = useState();
 
     const getWeatherData = async () => {
         try {
@@ -23,39 +23,41 @@ export default function WeatherWidget({ city, zipcode }) {
             setTemperature(temp);
             // mise en state de l'icon qui correspond
             setIcon(json.weather[0].icon)
+
+
+            // requete de l'image de fond
+            const pictureUrl = `https://api.teleport.org/api/urban_areas/slug:${city}/images/`
+            //fetch des données
+            const responsePicture = await fetch(pictureUrl.toLowerCase());
+            const jsonPicture = await responsePicture.json()
+            // le lien de l'image va dans le state
+            setPicture(jsonPicture.photos[0].image.mobile);
+
         } catch (error) {
             console.error(error);
         }
-    }
-
-    if (temperature === undefined) {
-        return (
-        <div className="weather-widget">
-        <div className="weather-widget__loading">
-            <p>Loading...</p>
-        </div>
-        </div>
-        )
     }
     
     useEffect(() => {
         getWeatherData();
     }, [city])
 
+
+
+    if (temperature === undefined) {
+        return (
+            <View>
+                <Text>Loading...</Text>
+            </View>
+        )
+    }
+    
     return (
-        <View style={styles.container}>
-            <Text>Dans la ville de : {city}</Text>
+        <View>
+            <Text style={{ fontSize: 20}} >{city}</Text>
+            <Image source={{ uri: picture}} style={{ width: 400, height: 400 }} />
             <Text>La température est de : {temperature} degrés</Text>
-            <Image source={{ url: `http://openweathermap.org/img/wn/${icon}@2x.png` }} style = {{ width: 100, height: 100 }} />
+            <Image source={{ url: `http://openweathermap.org/img/wn/${icon}@2x.png` }} style={{ width: 100, height: 100 }} />
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-});
