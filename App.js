@@ -1,13 +1,20 @@
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import HeaderApp from './components/HeaderApp';
+import WeatherWidget from './components/WeatherWidget';
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <HeaderApp />
+        <WeatherWidget city="Paris" zipcode={75000} />
+      </View>
+    </SafeAreaProvider>
   );
 }
 
