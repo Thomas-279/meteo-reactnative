@@ -53,7 +53,7 @@ export default function WeatherWidget({ city }) {
     }
     
     return (
-        <View>
+        <View style={{display:'flex', alignItems: 'center',}}>
             <Text style={{ fontSize: 20}} >{city}</Text>
             <Image source={{ uri: picture}} style={{ width: 400, height: 400 }} />
             <Text>La température est de : {temperature} degrés</Text>

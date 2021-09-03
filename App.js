@@ -17,7 +17,7 @@ export default function App() {
     <SafeAreaProvider>
       <View style={styles.container}>
         <View>
-          <StatusBar style="auto" />
+          <StatusBar barStyle="light-content" />
         </View>
         <View>
           <HeaderApp />
