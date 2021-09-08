@@ -37,12 +37,14 @@ export default function WeatherWidget({ city }) {
             console.error(error);
         }
     }
+    // mise en majuscule de la premiere lettre
+    function capitalizeFirstLetter(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
     
     useEffect(() => {
         getWeatherData();
     }, [city])
-
-
 
     if (temperature === undefined) {
         return (
@@ -54,8 +56,8 @@ export default function WeatherWidget({ city }) {
     
     return (
         <View style={{display:'flex', alignItems: 'center',}}>
-            <Text style={{ fontSize: 20}} >{city}</Text>
             <Image source={{ uri: picture}} style={{ width: 400, height: 400 }} />
+            <Text style={{ fontSize: 20}} >{capitalizeFirstLetter(city)}</Text>
             <Text>La température est de : {temperature} degrés</Text>
             <Image source={{ url: `http://openweathermap.org/img/wn/${icon}@2x.png` }} style={{ width: 100, height: 100 }} />
         </View>

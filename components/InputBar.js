@@ -25,6 +25,7 @@ export default function InputBar({ submitHandler }) {
                     // reset de l'input après onpress
                     setValue('')
                 }}
+                style={{alignItems:'center'}}
             >
                 <Text>Ajouter</Text>
             </TouchableOpacity>
